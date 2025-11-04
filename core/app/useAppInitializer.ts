@@ -7,19 +7,19 @@ import {useAtom} from "jotai";
 
 export interface AppInitializer {
   loading: boolean;
-  data: Array<ViennaStation>;
+  data: ViennaStation[];
 }
 
 export const useAppInitializer = (): AppInitializer => {
   const {data, loading} = useViennaStationsData();
-  const {value, loading: customStationsLoading} = useSecureStorage<Array<ViennaStation>>("custom_stations");
+  const {value, loading: customStationsLoading} = useSecureStorage<ViennaStation[]>("custom_stations");
   const [,setCustomStations] = useAtom(customViennaStationsAtom);
 
   useEffect(() => {
     if(!customStationsLoading && value){
       setCustomStations(value);
     }
-  }, [value, customStationsLoading]);
+  }, [value, customStationsLoading, setCustomStations]);
 
   const isLoading = useMemo(() => {
     return loading || customStationsLoading;
@@ -28,5 +28,5 @@ export const useAppInitializer = (): AppInitializer => {
   return useMemo(() => ({
     loading: isLoading,
     data: data
-  }), [data, loading])
+  }), [data, isLoading])
 }

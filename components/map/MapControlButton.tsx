@@ -1,5 +1,5 @@
 import {StyleProp, Text, TextStyle, TouchableOpacity, ViewStyle} from "react-native";
-import {ReactElement} from "react";
+import {ReactElement, memo} from "react";
 
 export interface MapControlButtonProps {
   onPress: () => void;
@@ -10,7 +10,7 @@ export interface MapControlButtonProps {
   };
 }
 
-export const MapControlButton = (props: MapControlButtonProps): ReactElement => {
+const MapControlButtonComponent = (props: MapControlButtonProps): ReactElement => {
 
   const {onPress, text, styles} = props;
 
@@ -20,3 +20,5 @@ export const MapControlButton = (props: MapControlButtonProps): ReactElement => 
     </TouchableOpacity>
   );
 };
+
+export const MapControlButton = memo(MapControlButtonComponent);

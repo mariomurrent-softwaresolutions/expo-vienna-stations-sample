@@ -7,7 +7,7 @@ import {customViennaStationsAtom} from "@/store/atoms/custom-vienna-stations.ato
 
 export interface ViennaStationsData {
   loading: boolean;
-  data: Array<ViennaStation>;
+  data: ViennaStation[];
   refreshData: () => void;
 }
 
@@ -17,20 +17,20 @@ export const useViennaStationsData = (): ViennaStationsData => {
     value: viennaStations,
     loading: viennaStationsLoading,
     setValue: setViennaStations
-  } = useSecureStorage<Array<ViennaStation>>("vienna_stations");
+  } = useSecureStorage<ViennaStation[]>("vienna_stations");
 
   const [stations] = useAtom(viennaStationsAtom);
-  const [, setViennaStationsQueryKey] = useAtom(rawViennaStationsAtomQueryKeyAtom)
+  const [, setViennaStationsQueryKey] = useAtom(rawViennaStationsAtomQueryKeyAtom);
 
   useEffect(() => {
     if (!stations.isLoading) {
       setViennaStations(stations.data).catch(console.error);
     }
-  }, []);
+  }, [stations.isLoading, stations.data, setViennaStations]);
 
   const refreshData = (): void => {
     setViennaStationsQueryKey(new Date().getUTCMilliseconds());
-  }
+  };
 
   const isLoading = useMemo(() => {
     return stations.isLoading || viennaStationsLoading;
@@ -38,7 +38,7 @@ export const useViennaStationsData = (): ViennaStationsData => {
 
 
   const allData = useMemo(() => {
-    const allStations = new Array<ViennaStation>();
+    const allStations: ViennaStation[] = [];
     if (viennaStations && viennaStations.length > 0) {
       allStations.push(...viennaStations);
     } else {

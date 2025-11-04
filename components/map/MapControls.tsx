@@ -1,5 +1,5 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {ReactElement} from "react";
+import {StyleSheet, View} from "react-native";
+import {ReactElement, memo} from "react";
 import {MapControlButton} from "@/components/map/MapControlButton";
 
 export interface MapControlProps {
@@ -8,7 +8,7 @@ export interface MapControlProps {
   zoomToMe: () => void;
 }
 
-export const MapControls = (props: MapControlProps): ReactElement => {
+const MapControlsComponent = (props: MapControlProps): ReactElement => {
 
   const {zoomIn, zoomOut, zoomToMe} = props;
 
@@ -22,6 +22,8 @@ export const MapControls = (props: MapControlProps): ReactElement => {
     </>
   );
 };
+
+export const MapControls = memo(MapControlsComponent);
 
 const styles = StyleSheet.create({
   controls: {

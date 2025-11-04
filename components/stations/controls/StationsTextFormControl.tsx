@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/form-control';
 import {AlertCircleIcon} from '@/components/ui/icon';
 import {Input, InputField} from '@/components/ui/input';
+import {ReactElement, memo, useCallback} from 'react';
 
 export interface StationsFormControlProps {
   isInvalid: boolean;
@@ -21,9 +22,13 @@ export interface StationsFormControlProps {
   placeholder: string;
 }
 
-export const StationsTextFormControl = (props: StationsFormControlProps) => {
+const StationsTextFormControlComponent = (props: StationsFormControlProps): ReactElement => {
 
   const {isInvalid, onChange, value, label, helperText, errorText, placeholder} = props;
+
+  const handleChange = useCallback((text: string) => {
+    onChange(text);
+  }, [onChange]);
 
   return (
     <FormControl
@@ -41,14 +46,16 @@ export const StationsTextFormControl = (props: StationsFormControlProps) => {
           type="text"
           placeholder={placeholder}
           value={value}
-          onChangeText={(text) => onChange(text)}
+          onChangeText={handleChange}
         />
       </Input>
-      {helperText && <FormControlHelper>
+      {helperText && (
+        <FormControlHelper>
           <FormControlHelperText>
-              Must be at least 2 characters.
+            {helperText}
           </FormControlHelperText>
-      </FormControlHelper>}
+        </FormControlHelper>
+      )}
       <FormControlError>
         <FormControlErrorIcon as={AlertCircleIcon} className="text-red-500"/>
         <FormControlErrorText className="text-red-500">
@@ -58,3 +65,5 @@ export const StationsTextFormControl = (props: StationsFormControlProps) => {
     </FormControl>
   );
 };
+
+export const StationsTextFormControl = memo(StationsTextFormControlComponent);

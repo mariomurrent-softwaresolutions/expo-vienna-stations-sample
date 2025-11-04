@@ -8,14 +8,15 @@ export default function MapScreen() {
   const {withSafeArea} = useSafeArea();
   const params = useLocalSearchParams<{ selectedStation: string }>();
 
-  const safeAreaStyles = useMemo(()=>{
+  const safeAreaStyles = useMemo(() => {
     return withSafeArea(styles);
-  },[withSafeArea]);
+  }, [withSafeArea]);
 
   return (
     <View style={safeAreaStyles}>
       <CustomMapView zoomToStation={params.selectedStation}/>
-    </View>);
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

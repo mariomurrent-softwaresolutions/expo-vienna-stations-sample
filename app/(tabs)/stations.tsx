@@ -9,12 +9,12 @@ export default function StationsScreen() {
   const {data, loading, refreshData} = useViennaStationsData();
   const {withSafeArea} = useSafeArea();
 
-  const safeAreaStyles = useMemo(()=>{
+  const safeAreaStyles = useMemo(() => {
     return withSafeArea(styles);
-  },[withSafeArea]);
+  }, [withSafeArea]);
 
   if (loading) {
-    return <LoadingIndicator/>
+    return <LoadingIndicator/>;
   }
 
   return (
