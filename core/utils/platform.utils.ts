@@ -1,0 +1,11 @@
+import {Platform} from "react-native";
+
+const isIOS = (): boolean => {
+  return Platform.OS === "ios";
+}
+
+const isAndroid = (): boolean => {
+  return Platform.OS === "android";
+}
+
+export {isAndroid, isIOS};
