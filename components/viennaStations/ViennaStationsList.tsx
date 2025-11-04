@@ -28,13 +28,15 @@ export const ViennaStationsList = (props: ViennaStationListProps): ReactElement 
   }, [refresh]);
 
   const sortedData = useMemo(() => {
-    return data.sort((a, b) => a.name.localeCompare(b.name));
+    return [...data].sort((a, b) => a.name.localeCompare(b.name));
   }, [data]);
 
   const renderItem = useCallback((data: ListRenderItemInfo<ViennaStation>) => {
     const {item} = data;
-    return <ViennaStationsListItem station={item} onPress={() => onPress(item)}/>
+    return <ViennaStationsListItem station={item} onPress={() => onPress(item)}/>;
   }, [onPress]);
+
+  const keyExtractor = useCallback((item: ViennaStation) => item.id.toString(), []);
 
   return (
     <FlatList
@@ -46,7 +48,7 @@ export const ViennaStationsList = (props: ViennaStationListProps): ReactElement 
       }
       data={sortedData}
       renderItem={renderItem}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={keyExtractor}
     />
   );
 };

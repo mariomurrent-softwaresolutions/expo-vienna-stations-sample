@@ -1,6 +1,6 @@
 import {Button, ButtonText} from '@/components/ui/button';
 import {VStack} from '@/components/ui/vstack';
-import {ReactElement, useState} from "react";
+import {ReactElement, useState, useCallback} from "react";
 import {Box} from "@/components/ui/box";
 import {Heading} from "@/components/ui/heading";
 import {generateRandomNumberAboveTenThousand, isValidCoordinate} from "@/core/utils";
@@ -20,7 +20,25 @@ export const AddStations = (): ReactElement => {
   const {refreshData} = useViennaStationsData();
   const toast = useToast();
 
-  const handleSubmit = async () => {
+  const showSuccessToast = useCallback(() => {
+    toast.show({
+      placement: 'top',
+      duration: 3000,
+      render: ({ id }) => {
+        const uniqueToastId = 'toast-' + id;
+        return (
+          <Toast nativeID={uniqueToastId} action="muted" variant="solid">
+            <ToastTitle>Saved</ToastTitle>
+            <ToastDescription>
+              The station was saved successfully.
+            </ToastDescription>
+          </Toast>
+        );
+      },
+    });
+  }, [toast]);
+
+  const handleSubmit = useCallback(async () => {
     const nameValid = name.length > 2;
     const coordinatesValid = isValidCoordinate(latitude, longitude);
     if (nameValid && coordinatesValid) {
@@ -40,25 +58,7 @@ export const AddStations = (): ReactElement => {
       setIsLatitudeValid(coordinatesValid);
       setIsLongitudeValid(coordinatesValid);
     }
-  };
-
-  const showSuccessToast = () => {
-    toast.show({
-      placement: 'top',
-      duration: 3000,
-      render: ({ id }) => {
-        const uniqueToastId = 'toast-' + id;
-        return (
-          <Toast nativeID={uniqueToastId} action="muted" variant="solid">
-            <ToastTitle>Saved</ToastTitle>
-            <ToastDescription>
-              The station was saved successfully.
-            </ToastDescription>
-          </Toast>
-        );
-      },
-    });
-  };
+  }, [name, latitude, longitude, save, showSuccessToast, refreshData]);
 
   return (
     <Box className="p-3">

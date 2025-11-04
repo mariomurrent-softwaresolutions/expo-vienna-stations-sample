@@ -1,6 +1,7 @@
 import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {ReactElement, memo} from "react";
 
-export const LoadingIndicator = () => {
+const LoadingIndicatorComponent = (): ReactElement => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large"/>
@@ -8,8 +9,12 @@ export const LoadingIndicator = () => {
   );
 };
 
+export const LoadingIndicator = memo(LoadingIndicatorComponent);
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1, justifyContent: "center", alignItems: "center"
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center"
   }
 });
