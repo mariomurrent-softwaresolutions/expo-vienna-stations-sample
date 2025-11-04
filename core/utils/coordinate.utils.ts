@@ -18,10 +18,10 @@ const isValidCoordinate = (latitude: string, longitude: string): boolean => {
   const validLng = lng >= -180 && lng <= 180;
 
   return validLat && validLng;
-}
+};
 
 const isZeroCoordinate = (latitude: number, longitude: number): boolean => {
   return latitude === 0 && longitude === 0;
-}
+};
 
 export {isValidCoordinate};

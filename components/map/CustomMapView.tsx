@@ -17,13 +17,14 @@ export const CustomMapView = (props: CustomMapViewProps): ReactElement => {
 
   const defaultAltitude = 100;
   const defaultZoom = 17;
-  const defaultLocation = {
-    latitude: 48.1944869,
-    longitude: 16.2706927,
-  };
   const mapRef = useRef<MapView>(null);
   const {location} = useGeolocation();
   const {data, loading} = useViennaStationsData();
+
+  const defaultLocation = useMemo(() => ({
+    latitude: 48.1944869,
+    longitude: 16.2706927,
+  }), []);
 
   const zoomToStationData = useMemo(() => {
     return data?.find((s) => s.id === zoomToStation);
@@ -41,11 +42,11 @@ export const CustomMapView = (props: CustomMapViewProps): ReactElement => {
         altitude: defaultAltitude
       });
     }
-  }, [location, zoomToStationData?.location]);
+  }, [location, zoomToStationData?.location, defaultZoom, defaultAltitude]);
 
   useEffect(() => {
     zoomToDefaultOrGivenLocation();
-  }, [zoomToStation]);
+  }, [zoomToStation, zoomToDefaultOrGivenLocation]);
 
   const mapCenter = useMemo(() => {
     if (location) {
@@ -90,19 +91,27 @@ export const CustomMapView = (props: CustomMapViewProps): ReactElement => {
   };
 
   if (loading) {
-    return <LoadingIndicator/>
+    return <LoadingIndicator/>;
   }
 
   return (
     <>
-      <MapView ref={mapRef}
-               style={styles.map} showsUserLocation followsUserLocation
-               zoomControlEnabled zoomEnabled>
+      <MapView 
+        ref={mapRef}
+        style={styles.map} 
+        showsUserLocation 
+        followsUserLocation
+        zoomControlEnabled 
+        zoomEnabled
+      >
         {location && <Marker coordinate={location}/>}
-        {data.map((station: ViennaStation) => <Marker key={station.id} coordinate={station.location}/>)}
+        {data.map((station: ViennaStation) => (
+          <Marker key={station.id} coordinate={station.location}/>
+        ))}
       </MapView>
       <MapControls zoomIn={zoomIn} zoomOut={zoomOut} zoomToMe={zoomToMe}/>
-    </>);
+    </>
+  );
 };
 
 

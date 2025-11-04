@@ -1,6 +1,6 @@
 import {Button, ButtonText} from '@/components/ui/button';
 import {VStack} from '@/components/ui/vstack';
-import {ReactElement, useMemo, useState} from "react";
+import {ReactElement, useState} from "react";
 import {Box} from "@/components/ui/box";
 import {Heading} from "@/components/ui/heading";
 import {generateRandomNumberAboveTenThousand, isValidCoordinate} from "@/core/utils";

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {ReactElement} from "react";
 import {MapControlButton} from "@/components/map/MapControlButton";
 

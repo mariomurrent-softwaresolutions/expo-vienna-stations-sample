@@ -5,7 +5,7 @@ import {ViennaStationsListItem} from "@/components/viennaStations/ViennaStations
 import {router} from "expo-router";
 
 export interface ViennaStationListProps {
-  data: Array<ViennaStation>;
+  data: ViennaStation[];
   refresh: () => void;
 }
 
@@ -29,7 +29,7 @@ export const ViennaStationsList = (props: ViennaStationListProps): ReactElement 
 
   const sortedData = useMemo(() => {
     return data.sort((a, b) => a.name.localeCompare(b.name));
-  }, [data])
+  }, [data]);
 
   const renderItem = useCallback((data: ListRenderItemInfo<ViennaStation>) => {
     const {item} = data;
