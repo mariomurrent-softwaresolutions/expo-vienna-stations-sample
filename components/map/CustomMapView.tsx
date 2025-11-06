@@ -42,7 +42,7 @@ export const CustomMapView = (props: CustomMapViewProps): ReactElement => {
         altitude: defaultAltitude
       });
     }
-  }, [location, zoomToStationData?.location, defaultZoom, defaultAltitude]);
+  }, [location, zoomToStationData?.location]);
 
   useEffect(() => {
     zoomToDefaultOrGivenLocation();
@@ -96,12 +96,12 @@ export const CustomMapView = (props: CustomMapViewProps): ReactElement => {
 
   return (
     <>
-      <MapView 
+      <MapView
         ref={mapRef}
-        style={styles.map} 
-        showsUserLocation 
+        style={styles.map}
+        showsUserLocation
         followsUserLocation
-        zoomControlEnabled 
+        zoomControlEnabled
         zoomEnabled
       >
         {location && <Marker coordinate={location}/>}

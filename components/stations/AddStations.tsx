@@ -39,7 +39,7 @@ export const AddStations = (): ReactElement => {
   }, [toast]);
 
   const handleSubmit = useCallback(async () => {
-    const nameValid = name.length > 2;
+    const nameValid = name.length >= 2;
     const coordinatesValid = isValidCoordinate(latitude, longitude);
     if (nameValid && coordinatesValid) {
       try {
@@ -50,6 +50,7 @@ export const AddStations = (): ReactElement => {
         });
         showSuccessToast();
         refreshData();
+        resetForm();
       } catch (error) {
         console.error(error);
       }
@@ -59,6 +60,15 @@ export const AddStations = (): ReactElement => {
       setIsLongitudeValid(coordinatesValid);
     }
   }, [name, latitude, longitude, save, showSuccessToast, refreshData]);
+
+  const resetForm = ():void =>{
+    setName('');
+    setLatitude('');
+    setLongitude('');
+    setNameValid(true);
+    setIsLatitudeValid(true);
+    setIsLongitudeValid(true);
+  }
 
   return (
     <Box className="p-3">
