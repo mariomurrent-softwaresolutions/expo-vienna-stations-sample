@@ -1,9 +1,8 @@
-import {useEffect, useMemo} from "react";
+import {useMemo} from "react";
 import {ViennaStation} from "@/models/ViennaStation";
 import {useViennaStationsData} from "@/core/data/useViennaStationsData";
-import {useSecureStorage} from "@/core/storage/useSecureStorage";
-import {customViennaStationsAtom} from "@/store/atoms/custom-vienna-stations.atom";
-import {useAtom} from "jotai";
+import {useSavedViennaStationData} from "@/core/data/useSavedViennaStationData";
+import {useCustomViennaStationData} from "@/core/data/useCustomViennaStationData";
 
 export interface AppInitializer {
   loading: boolean;
@@ -12,18 +11,13 @@ export interface AppInitializer {
 
 export const useAppInitializer = (): AppInitializer => {
   const {data, loading} = useViennaStationsData();
-  const {value, loading: customStationsLoading} = useSecureStorage<ViennaStation[]>("custom_stations");
-  const [,setCustomStations] = useAtom(customViennaStationsAtom);
+  const {loading: customStationsLoading} = useCustomViennaStationData();
+  const {loading: savedStationsLoading} = useSavedViennaStationData();
 
-  useEffect(() => {
-    if(!customStationsLoading && value){
-      setCustomStations(value);
-    }
-  }, [value, customStationsLoading, setCustomStations]);
 
   const isLoading = useMemo(() => {
-    return loading || customStationsLoading;
-  }, [loading, customStationsLoading]);
+    return loading || customStationsLoading || savedStationsLoading;
+  }, [loading, customStationsLoading, savedStationsLoading]);
 
   return useMemo(() => ({
     loading: isLoading,

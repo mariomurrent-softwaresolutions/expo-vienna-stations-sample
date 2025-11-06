@@ -1,5 +1,5 @@
 import {useAtom} from "jotai";
-import {useEffect, useMemo} from "react";
+import {useMemo} from "react";
 import {ViennaStation} from "@/models/ViennaStation";
 import {rawViennaStationsAtomQueryKeyAtom, viennaStationsAtom} from "@/store/atoms";
 import {useSecureStorage} from "@/core/storage/useSecureStorage";
@@ -16,17 +16,10 @@ export const useViennaStationsData = (): ViennaStationsData => {
   const {
     value: viennaStations,
     loading: viennaStationsLoading,
-    setValue: setViennaStations
   } = useSecureStorage<ViennaStation[]>("vienna_stations");
 
   const [stations] = useAtom(viennaStationsAtom);
   const [, setViennaStationsQueryKey] = useAtom(rawViennaStationsAtomQueryKeyAtom);
-
-  useEffect(() => {
-    if (!stations.isLoading) {
-      setViennaStations(stations.data).catch(console.error);
-    }
-  }, [stations.isLoading, stations.data, setViennaStations]);
 
   const refreshData = (): void => {
     setViennaStationsQueryKey(new Date().getUTCMilliseconds());
