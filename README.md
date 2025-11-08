@@ -85,10 +85,12 @@ expo-vienna-stations-sample/
 ├── components/                   # React components
 │   ├── map/                     # Map-related components
 │   │   ├── CustomMapView.tsx   # Main map component
-│   │   └── MapControls.tsx     # Zoom and location controls
+│   │   ├── MapControls.tsx     # Zoom and location controls
+│   │   └── MapControlButton.tsx # Individual control button
 │   ├── stations/                # Station management components
 │   │   ├── AddStations.tsx     # Form to add custom stations
 │   │   └── controls/           # Form controls
+│   │       └── StationsTextFormControl.tsx
 │   ├── viennaStations/          # Vienna stations display
 │   │   ├── ViennaStationsList.tsx
 │   │   └── ViennaStationsListItem.tsx
@@ -97,7 +99,8 @@ expo-vienna-stations-sample/
 ├── core/                        # Core business logic
 │   ├── data/                    # Data hooks
 │   │   ├── useViennaStationsData.ts
-│   │   └── useCustomViennaStationData.ts
+│   │   ├── useCustomViennaStationData.ts
+│   │   └── useSavedViennaStationData.ts
 │   ├── geolocation/             # Location services
 │   ├── storage/                 # Secure storage utilities
 │   ├── mapper/                  # Data transformation
@@ -106,7 +109,8 @@ expo-vienna-stations-sample/
 │   └── atoms/                   # Atomic state definitions
 │       ├── vienna-stations.atom.ts
 │       ├── raw-vienna-stations.atom.ts
-│       └── custom-vienna-stations.atom.ts
+│       ├── custom-vienna-stations.atom.ts
+│       └── saved-vienna-stations.atom.ts
 ├── models/                      # TypeScript interfaces
 │   ├── ViennaStation.ts        # Station data model
 │   └── GeoLocation.ts          # Location data model
