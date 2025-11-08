@@ -38,35 +38,38 @@ This application demonstrates modern React Native development practices using th
 ## Technology Stack
 
 ### Core Framework
+- **React** (v19.1.0) - JavaScript library for building user interfaces
 - **React Native** (v0.81.5) - Cross-platform mobile development
-- **Expo SDK** (v54) - Development platform and tooling
-- **TypeScript** - Type-safe development
-- **Expo Router** (v6) - File-based routing with typed routes
+- **Expo SDK** (~54.0.22) - Development platform and tooling
+- **TypeScript** (~5.9.2) - Type-safe development
+- **Expo Router** (~6.0.14) - File-based routing with typed routes
 
 ### State Management
-- **Jotai** (v2.15.1) - Atomic state management
-- **Jotai TanStack Query** (v0.11.0) - Async state and data fetching
-- **TanStack Query Core** (v5.90.6) - Powerful data synchronization
+- **Jotai** (^2.15.1) - Atomic state management
+- **Jotai TanStack Query** (^0.11.0) - Async state and data fetching
+- **TanStack Query Core** (^5.90.6) - Powerful data synchronization
 
 ### UI & Styling
-- **NativeWind** (v4.2.1) - TailwindCSS for React Native
-- **TailwindCSS** (v3.4.18) - Utility-first CSS framework
-- **React Native Reanimated** (v4.1.0) - Smooth animations
-- **Gluestack UI** - Component library for consistent UI
+- **NativeWind** (^4.2.1) - TailwindCSS for React Native
+- **TailwindCSS** (^3.4.18) - Utility-first CSS framework
+- **React Native Reanimated** (~4.1.0) - Smooth animations
+- **Gluestack UI** (^3.0.12) - Component library for consistent UI
+- **Tailwind Variants** (^0.1.20) - Variant-based styling utilities
 
 ### Maps & Location
 - **React Native Maps** (v1.20.1) - Interactive map component
-- **Expo Maps** (v0.12.8) - Expo-managed map implementation
-- **Expo Location** (v19) - Geolocation services
-- **React Native Map Clustering** (v4.0.0) - Marker clustering for performance
+- **Expo Maps** (~0.12.8) - Expo-managed map implementation
+- **Expo Location** (~19.0.7) - Geolocation services
+- **React Native Gesture Handler** (~2.28.0) - Native gesture handling
 
 ### Data & Storage
-- **Expo Secure Store** (v15) - Encrypted local storage
-- **PapaParse** (v5.5.3) - CSV parsing for station data
+- **Expo Secure Store** (~15.0.7) - Encrypted local storage
+- **PapaParse** (^5.5.3) - CSV parsing for station data
 
 ### Development Tools
-- **ESLint** (v9.25.0) - Code linting
-- **Babel Module Resolver** - Path aliasing (@/ imports)
+- **ESLint** (^9.25.0) - Code linting
+- **ESLint Config Expo** (~10.0.0) - Expo-specific ESLint configuration
+- **Babel Module Resolver** (^5.0.2) - Path aliasing (@/ imports)
 
 ## Project Structure
 
@@ -82,10 +85,12 @@ expo-vienna-stations-sample/
 ├── components/                   # React components
 │   ├── map/                     # Map-related components
 │   │   ├── CustomMapView.tsx   # Main map component
-│   │   └── MapControls.tsx     # Zoom and location controls
+│   │   ├── MapControls.tsx     # Zoom and location controls
+│   │   └── MapControlButton.tsx # Individual control button
 │   ├── stations/                # Station management components
 │   │   ├── AddStations.tsx     # Form to add custom stations
 │   │   └── controls/           # Form controls
+│   │       └── StationsTextFormControl.tsx
 │   ├── viennaStations/          # Vienna stations display
 │   │   ├── ViennaStationsList.tsx
 │   │   └── ViennaStationsListItem.tsx
@@ -94,7 +99,8 @@ expo-vienna-stations-sample/
 ├── core/                        # Core business logic
 │   ├── data/                    # Data hooks
 │   │   ├── useViennaStationsData.ts
-│   │   └── useCustomViennaStationData.ts
+│   │   ├── useCustomViennaStationData.ts
+│   │   └── useSavedViennaStationData.ts
 │   ├── geolocation/             # Location services
 │   ├── storage/                 # Secure storage utilities
 │   ├── mapper/                  # Data transformation
@@ -103,7 +109,8 @@ expo-vienna-stations-sample/
 │   └── atoms/                   # Atomic state definitions
 │       ├── vienna-stations.atom.ts
 │       ├── raw-vienna-stations.atom.ts
-│       └── custom-vienna-stations.atom.ts
+│       ├── custom-vienna-stations.atom.ts
+│       └── saved-vienna-stations.atom.ts
 ├── models/                      # TypeScript interfaces
 │   ├── ViennaStation.ts        # Station data model
 │   └── GeoLocation.ts          # Location data model
@@ -163,10 +170,11 @@ This application fetches real-time public transport station data from Vienna's O
 ## Key Features Implementation
 
 ### State Management
-The app uses Jotai for atomic state management, with three main atoms:
+The app uses Jotai for atomic state management, with four main atoms:
 - `rawViennaStationsAtom` - Fetches CSV data from Vienna's API
 - `viennaStationsAtom` - Parsed and processed station data
 - `customViennaStationsAtom` - User-added custom stations
+- `savedViennaStationsAtom` - Cached Vienna stations for offline access
 
 ### Secure Storage
 Custom stations are stored securely using Expo Secure Store, which provides:
@@ -181,10 +189,10 @@ The app requests and uses device location to:
 - Show user's position alongside stations
 
 ### Performance Optimizations
-- Map marker clustering for better performance with many markers
 - Memoized components to prevent unnecessary re-renders
 - Efficient FlatList rendering for large station lists
 - Lazy loading of data with TanStack Query
+- Local caching of station data for improved performance
 
 ## Platform Support
 
